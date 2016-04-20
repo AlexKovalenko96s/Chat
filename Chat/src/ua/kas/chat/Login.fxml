@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.kas.chat.Controller">
+   <children>
+      <TextField fx:id="tf_login" layoutX="276.0" layoutY="165.0" promptText="login" />
+      <Button layoutX="325.0" layoutY="260.0" mnemonicParsing="false" onAction="#login" text="ENTER" />
+      <PasswordField fx:id="tf_password" layoutX="276.0" layoutY="207.0" promptText="password" />
+   </children>
+</AnchorPane>
