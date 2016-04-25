@@ -99,7 +99,7 @@ public class Controller_chat implements Initializable {
 		while (myRs.next()) {
 			
 			for(int i = 1; i<=myRs.getInt("click"); i++){
-				
+		
 				String message =myRs.getString("message");
 				System.out.println(i);
 				list.getItems().addAll("      " + myRs.getString("who_write") + "\n"
