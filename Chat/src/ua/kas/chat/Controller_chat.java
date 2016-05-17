@@ -40,7 +40,7 @@ public class Controller_chat implements Initializable {
 		} catch (SQLException e) {}
 	}
 	
-	public void send(ActionEvent e) {
+	public void send(ActionEvent e) throws SQLException {
 		
 		Connection conn;
 		try {
@@ -49,41 +49,37 @@ public class Controller_chat implements Initializable {
 			ResultSet result = rstat.executeQuery("select * from message");
 		
 			while(result.next()){
+				
 				who_write = result.getString("who_write");
 				who_read = result.getString("who_read");
-				click = result.getInt("click");
-				M = result.getString("message");
-				id = result.getInt("id");
-				System.out.println(who_write + " " + Controller.login);
-				System.out.println(who_read + " " + with.getEditor().getText());
 				
 				if(who_write.equals(Controller.login) && who_read.equals(with.getEditor().getText())){
+					
+					click = result.getInt("click");
+					M = result.getString("message");
+					id = result.getInt("id");
 					click++;
+					
 					java.sql.PreparedStatement myStmt = conn
 							.prepareStatement("UPDATE message SET message=?, click=? WHERE id=?");
 					myStmt.setString(1, M + "&" + click + message.getText() + click + "&");
 					myStmt.setInt(2, click);
 					myStmt.setInt(3, id);
 					myStmt.executeUpdate();
-					System.out.println("complete!");
-					
+					refresh(e);
 				}
-				
-				else{
-					
-					java.sql.PreparedStatement pstat = conn
-							.prepareStatement("insert into message (who_write,who_read,message, click) values (?,?,?,?)");
-					pstat.setString(1, Controller.login);
-					pstat.setString(2, with.getEditor().getText());
-					pstat.setString(3, "&"+ click + message.getText() + click + "&");
-					pstat.setInt(4, 1);
-					pstat.executeUpdate();
-					System.out.println("Complet!");
-					
-				}
-			}
-		} catch (SQLException e1) {}	
-		
+			}	
+		} catch (Exception ex) {
+			
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/freemove", "root", "root");
+			java.sql.PreparedStatement pstat = conn.prepareStatement("insert into message (who_write,who_read,message, click) values (?,?,?,?)");
+			pstat.setString(1, Controller.login);
+			pstat.setString(2, with.getEditor().getText());
+			pstat.setString(3, "&"+ 1 + message.getText() + 1 + "&");
+			pstat.setInt(4, 1);
+			pstat.executeUpdate();
+			refresh(e);
+		}	
 		message.setText("");
 	}
 	
@@ -101,7 +97,6 @@ public class Controller_chat implements Initializable {
 			for(int i = 1; i<=myRs.getInt("click"); i++){
 		
 				String message =myRs.getString("message");
-				System.out.println(i);
 				list.getItems().addAll("      " + myRs.getString("who_write") + "\n"
 						+ message.substring((message.indexOf("&"+i))+2, message.indexOf(i+"&")) + "\n" + "\n");
 					
