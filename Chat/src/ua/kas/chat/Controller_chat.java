@@ -39,7 +39,6 @@ public class Controller_chat implements Initializable {
 			while(result.next()){
 				with.getItems().addAll(result.getString("user_name"));
 			}
-			
 		} catch (SQLException e) {}
 	}
 	
@@ -83,8 +82,7 @@ public class Controller_chat implements Initializable {
 				pstat.setInt(4, 1);
 				pstat.executeUpdate();
 				refresh(e);
-			}
-			
+			}	
 		} catch (Exception ex) {}	
 		message.setText("");
 	}
