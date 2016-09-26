@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +30,8 @@ public class Controller_chat implements Initializable {
 	static Boolean bool = false;
 	String M;
 	static int id;
+	static Timer t = new Timer();
+	static int refresh = 0;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
